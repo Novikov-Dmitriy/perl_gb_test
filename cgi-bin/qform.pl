@@ -4,8 +4,6 @@
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 
-require "./bdconf.pl";
-
 my $cgi = new CGI; # create new CGI object
 
 my $email = $cgi->param('address');
@@ -26,7 +24,9 @@ print $cgi->start_html
         ],      
 );
 
-my $dbh = DBI->connect($database, $user, $password);
+require "./bdconf.pl";
+
+my $dbh = DBI->connect($database, $user, $password) or die "Couldn't connect to DB $database";
     
 my $e = "\n<br>";
 print "Электронные адреса из базы, относящиеся к которым данные имеются в обеих таблицах (указано 50 штук, хотя их больше):$e$e"; 
